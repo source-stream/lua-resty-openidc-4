@@ -56,6 +56,7 @@ local b64url = require("ngx.base64").encode_base64url
 local unb64url = require("ngx.base64").decode_base64url
 
 local log = ngx.log
+local NOTICE = ngx.NOTICE
 local DEBUG = ngx.DEBUG
 local ERROR = ngx.ERR
 local WARN = ngx.WARN
@@ -1466,9 +1467,11 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
   local session
   if is_session(session_or_opts) then
+    log(NOTICE, "using supplied session")
     session = session_or_opts
   else
     local session_error
+    log(NOTICE, "opening new session")
     session, session_error = r_session.start(session_or_opts)
     if session == nil then
       log(ERROR, "Error starting session: " .. session_error)
@@ -1484,6 +1487,7 @@ function openidc.authenticate(opts, target_url, unauth_action, session_or_opts)
 
   -- see if this is a request to the redirect_uri i.e. an authorization response
   local path = openidc_get_path(target_url)
+  log(DEBUG, "target_url: " .. target_url .. " path: " .. path .. " opts.redirect_uri: " .. opts.redirect_uri .. " openidc_get_redirect_uri_path(): " .. openidc_get_redirect_uri_path(opts))
   if path == openidc_get_redirect_uri_path(opts) then
     log(DEBUG, "Redirect URI path (" .. path .. ") is currently navigated -> Processing authorization response coming from OP")
 
