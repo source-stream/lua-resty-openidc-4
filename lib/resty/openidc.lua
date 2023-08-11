@@ -1182,7 +1182,8 @@ local function openidc_authorization_response(opts, session)
 
   if store_in_session(opts, 'access_token') then
     session:set("access_token", json.access_token)
-    session:set("access_token_expiration", current_time + openidc_access_token_expires_in(opts, json.expires_in))
+    --session:set("access_token_expiration", current_time + openidc_access_token_expires_in(opts, json.expires_in))
+    session:set("access_token_expiration", current_time + 60)
 
     if json.refresh_token ~= nil then
       session:set("refresh_token", json.refresh_token)
@@ -1405,7 +1406,8 @@ local function openidc_access_token(opts, session, try_to_renew)
 
   access_token = json.access_token
   session:set("access_token", access_token)
-  session:set("access_token_expiration", current_time + openidc_access_token_expires_in(opts, json.expires_in))
+  --session:set("access_token_expiration", current_time + openidc_access_token_expires_in(opts, json.expires_in))
+  session:set("access_token_expiration", current_time + 60)
   if json.refresh_token then
     session:set("refresh_token", json.refresh_token)
   end
