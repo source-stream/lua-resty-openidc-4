@@ -3,7 +3,7 @@ version = "1.7.7-0"
 source = {
     url = "git+https://github.com/source-stream/lua-resty-openidc-4",
     tag = "v1.7.7",
-    dir = "lua-resty-openidc"
+    dir = "lua-resty-openidc-4"
 }
 description = {
     summary = "A library for NGINX implementing the OpenID Connect Relying Party (RP) and the OAuth 2.0 Resource Server (RS) functionality",
